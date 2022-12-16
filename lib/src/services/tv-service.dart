@@ -26,7 +26,7 @@ class TvService extends _CommonService {
       );
 
   Future<PagedResult<TvBase>> getTrendingForDay({TvDiscoverSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
-        "3/tv/day",
+        "3/trending/tv/day",
         settings ?? const TvDiscoverSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
@@ -34,7 +34,7 @@ class TvService extends _CommonService {
 
   Future<PagedResult<TvBase>> getTrendingForWeek({TvDiscoverSettings? settings, int? page}) =>
       _fetchPagedResult<TvBase>(
-        "3/tv/week",
+        "3/trending/tv/week",
         settings ?? const TvDiscoverSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,

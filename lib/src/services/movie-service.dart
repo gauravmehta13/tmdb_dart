@@ -8,8 +8,7 @@ class MovieService extends _CommonService {
     return advancedSearch(settings, page: page);
   }
 
-  Future<PagedResult<MovieBase>> advancedSearch(MovieSearchSettings? settings,
-      {int? page}) {
+  Future<PagedResult<MovieBase>> advancedSearch(MovieSearchSettings? settings, {int? page}) {
     assert(settings?.query != null && settings!.query!.isNotEmpty);
     return _fetchPagedResult<MovieBase>(
       "3/search/movie",
@@ -19,17 +18,30 @@ class MovieService extends _CommonService {
     );
   }
 
-  Future<PagedResult<MovieBase>> discover(
-          {MovieDiscoverSettings? settings, int? page}) =>
-      _fetchPagedResult<MovieBase>(
+  Future<PagedResult<MovieBase>> discover({MovieDiscoverSettings? settings, int? page}) => _fetchPagedResult<MovieBase>(
         "3/discover/movie",
         settings ?? const MovieDiscoverSettings(),
         (map, assetResolver) => MovieBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<MovieBase>> getTopRated(
-          {MovieSearchSettings? settings, int? page}) =>
+  Future<PagedResult<MovieBase>> getTrendingForDay({MovieSearchSettings? settings, int? page}) =>
+      _fetchPagedResult<MovieBase>(
+        "3/trending/movie/day",
+        settings ?? const MovieSearchSettings(),
+        (map, assetResolver) => MovieBase.fromJson(map, assetResolver),
+        page,
+      );
+
+  Future<PagedResult<MovieBase>> getTrendingForWeek({MovieSearchSettings? settings, int? page}) =>
+      _fetchPagedResult<MovieBase>(
+        "3/trending/movie/week",
+        settings ?? const MovieSearchSettings(),
+        (map, assetResolver) => MovieBase.fromJson(map, assetResolver),
+        page,
+      );
+
+  Future<PagedResult<MovieBase>> getTopRated({MovieSearchSettings? settings, int? page}) =>
       _fetchPagedResult<MovieBase>(
         "3/movie/top_rated",
         settings ?? const MovieSearchSettings(),
@@ -37,17 +49,14 @@ class MovieService extends _CommonService {
         page,
       );
 
-  Future<PagedResult<MovieBase>> getPopular(
-          {MovieSearchSettings? settings, int? page}) =>
-      _fetchPagedResult<MovieBase>(
+  Future<PagedResult<MovieBase>> getPopular({MovieSearchSettings? settings, int? page}) => _fetchPagedResult<MovieBase>(
         "3/movie/popular",
         settings ?? const MovieSearchSettings(),
         (map, assetResolver) => MovieBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<MovieBase>> getUpComing(
-          {MovieSearchSettings? settings, int? page}) =>
+  Future<PagedResult<MovieBase>> getUpComing({MovieSearchSettings? settings, int? page}) =>
       _fetchPagedResult<MovieBase>(
         "3/movie/upcoming",
         settings ?? const MovieSearchSettings(),
@@ -55,8 +64,7 @@ class MovieService extends _CommonService {
         page,
       );
 
-  Future<PagedResult<MovieBase>> getNowPlaying(
-          {MovieSearchSettings? settings, int? page}) =>
+  Future<PagedResult<MovieBase>> getNowPlaying({MovieSearchSettings? settings, int? page}) =>
       _fetchPagedResult<MovieBase>(
         "3/movie/now_playing",
         settings ?? const MovieSearchSettings(),
@@ -64,8 +72,7 @@ class MovieService extends _CommonService {
         page,
       );
 
-  Future<Movie> getLatest(
-      {String? language, QualitySettings? qualitySettings}) {
+  Future<Movie> getLatest({String? language, QualitySettings? qualitySettings}) {
     Map<String, String?> queryParams = {
       "api_key": _apiKey,
       "language": language,
@@ -92,8 +99,7 @@ class MovieService extends _CommonService {
       "3/movie/$id/videos",
       queryParams,
       const QualitySettings(),
-      (map, assetResolver) =>
-          Video.listFromJson(map["results"] as List<dynamic>),
+      (map, assetResolver) => Video.listFromJson(map["results"] as List<dynamic>),
     );
   }
 
