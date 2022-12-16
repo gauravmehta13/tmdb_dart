@@ -8,8 +8,7 @@ class TvService extends _CommonService {
     return advancedSearch(settings, page: page);
   }
 
-  Future<PagedResult<TvBase>> advancedSearch(TvSearchSettings? settings,
-      {int? page}) {
+  Future<PagedResult<TvBase>> advancedSearch(TvSearchSettings? settings, {int? page}) {
     assert(settings?.query != null && settings!.query!.isNotEmpty);
     return _fetchPagedResult<TvBase>(
       "3/search/tv",
@@ -19,53 +18,57 @@ class TvService extends _CommonService {
     );
   }
 
-  Future<PagedResult<TvBase>> discover(
-          {TvDiscoverSettings? settings, int? page}) =>
-      _fetchPagedResult<TvBase>(
+  Future<PagedResult<TvBase>> discover({TvDiscoverSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
         "3/discover/tv",
         settings ?? const TvDiscoverSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<TvBase>> getTopRated(
-          {TvSearchSettings? settings, int? page}) =>
+  Future<PagedResult<TvBase>> getTrendingForDay({TvDiscoverSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
+        "3/tv/day",
+        settings ?? const TvDiscoverSettings(),
+        (map, assetResolver) => TvBase.fromJson(map, assetResolver),
+        page,
+      );
+
+  Future<PagedResult<TvBase>> getTrendingForWeek({TvDiscoverSettings? settings, int? page}) =>
       _fetchPagedResult<TvBase>(
+        "3/tv/week",
+        settings ?? const TvDiscoverSettings(),
+        (map, assetResolver) => TvBase.fromJson(map, assetResolver),
+        page,
+      );
+
+  Future<PagedResult<TvBase>> getTopRated({TvSearchSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
         "3/tv/top_rated",
         settings ?? const TvSearchSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<TvBase>> getPopular(
-          {TvSearchSettings? settings, int? page}) =>
-      _fetchPagedResult<TvBase>(
+  Future<PagedResult<TvBase>> getPopular({TvSearchSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
         "3/tv/popular",
         settings ?? const TvSearchSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<TvBase>> getAiringToday(
-          {TvSearchSettings? settings, int? page}) =>
-      _fetchPagedResult<TvBase>(
+  Future<PagedResult<TvBase>> getAiringToday({TvSearchSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
         "3/tv/airing_today",
         settings ?? const TvSearchSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<PagedResult<TvBase>> getOnTheAir(
-          {TvSearchSettings? settings, int? page}) =>
-      _fetchPagedResult<TvBase>(
+  Future<PagedResult<TvBase>> getOnTheAir({TvSearchSettings? settings, int? page}) => _fetchPagedResult<TvBase>(
         "3/tv/on_the_air",
         settings ?? const TvSearchSettings(),
         (map, assetResolver) => TvBase.fromJson(map, assetResolver),
         page,
       );
 
-  Future<TvShow> getLatest(
-      {String? language, QualitySettings? qualitySettings}) {
+  Future<TvShow> getLatest({String? language, QualitySettings? qualitySettings}) {
     var queryParams = {
       "api_key": _apiKey,
       "language": language,
@@ -92,8 +95,7 @@ class TvService extends _CommonService {
       "3/tv/$tvId/videos",
       queryParams,
       const QualitySettings(),
-      (map, assetResolver) =>
-          Video.listFromJson(map["results"] as List<dynamic>),
+      (map, assetResolver) => Video.listFromJson(map["results"] as List<dynamic>),
     );
   }
 
@@ -153,8 +155,7 @@ class TvService extends _CommonService {
       "3/tv/$tvId/season/$seasonNumber/videos",
       queryParams,
       const QualitySettings(),
-      (map, assetResolver) =>
-          Video.listFromJson(map["results"] as List<dynamic>),
+      (map, assetResolver) => Video.listFromJson(map["results"] as List<dynamic>),
     );
   }
 
@@ -175,8 +176,7 @@ class TvService extends _CommonService {
       "3/tv/$tvId/season/$seasonNumber/images",
       queryParams,
       qualitySettings ?? const QualitySettings(),
-      (map, assetResolver) => ImageInfo.listFromJson(
-          map["posters"] as List<dynamic>, assetResolver.getPosterPath),
+      (map, assetResolver) => ImageInfo.listFromJson(map["posters"] as List<dynamic>, assetResolver.getPosterPath),
     );
   }
 
@@ -218,8 +218,7 @@ class TvService extends _CommonService {
       "3/tv/$tvId/season/$seasonNumber/episode/$episodeNumber/videos",
       queryParams,
       const QualitySettings(),
-      (map, assetResolver) =>
-          Video.listFromJson(map["results"] as List<dynamic>),
+      (map, assetResolver) => Video.listFromJson(map["results"] as List<dynamic>),
     );
   }
 
@@ -241,8 +240,7 @@ class TvService extends _CommonService {
       "3/tv/$tvId/season/$seasonNumber/episode/$episodeNumber/images",
       queryParams,
       qualitySettings ?? const QualitySettings(),
-      (map, assetResolver) => ImageInfo.listFromJson(
-          map["stills"] as List<dynamic>, assetResolver.getStillPath),
+      (map, assetResolver) => ImageInfo.listFromJson(map["stills"] as List<dynamic>, assetResolver.getStillPath),
     );
   }
 
