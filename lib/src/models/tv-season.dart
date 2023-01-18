@@ -5,7 +5,6 @@ class TvSeason extends SeasonBase {
 
   TvSeason({
     Date? airDate,
-    int episodeCount = 0,
     required int id,
     String? name,
     String? overview,
@@ -14,7 +13,6 @@ class TvSeason extends SeasonBase {
     this.episodes = const [],
   }) : super(
           airDate: airDate,
-          episodeCount: episodeCount,
           id: id,
           name: name,
           overview: overview,
@@ -22,13 +20,14 @@ class TvSeason extends SeasonBase {
           seasonNumber: seasonNumber,
         );
 
+  int get episodeCount => episodes.length;
+
   factory TvSeason.fromJson(
     Map<String, dynamic> map,
     AssetResolver assetResolver,
   ) =>
       TvSeason(
         airDate: Date.tryParse(map["air_date"]),
-        episodeCount: map["episode_count"],
         id: map["id"],
         name: map["name"],
         overview: map["overview"],
@@ -72,22 +71,19 @@ class SeasonBase {
     AssetResolver assetResolver,
   ) =>
       SeasonBase(
-        airDate: Date.tryParse(map["air_date"]),
-        episodeCount: map["episode_count"],
-        id: map["id"],
-        name: map["name"],
-        overview: map["overview"],
-        posterPath: assetResolver.getPosterPath(map["poster_path"]),
-        seasonNumber: map["season_number"],
-      );
+          airDate: Date.tryParse(map["air_date"]),
+          episodeCount: map["episode_count"] ?? 0,
+          id: map["id"],
+          name: map["name"],
+          overview: map["overview"],
+          posterPath: assetResolver.getPosterPath(map["poster_path"]),
+          seasonNumber: map["season_number"]);
 
   static List<SeasonBase> listFromJson(
     List<dynamic> list,
     AssetResolver assetResolver,
   ) =>
-      list
-          .map((x) => SeasonBase.fromJson(x, assetResolver))
-          .toList(growable: false);
+      list.map((x) => SeasonBase.fromJson(x, assetResolver)).toList(growable: false);
 
   Map<String, dynamic> toMap() {
     return {
