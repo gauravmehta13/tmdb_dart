@@ -31,7 +31,7 @@ class Crew extends Creator {
         department: map["department"],
         creditId: map["credit_id"],
         gender: getGender(map["gender"]),
-        id: map["id"],
+        id: map["id"] ?? 0,
         job: map["job"],
         name: map["name"],
         profilePath: assetResolver.getProfilePath(map["profile_path"]),
