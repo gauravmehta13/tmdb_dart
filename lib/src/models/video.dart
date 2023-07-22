@@ -11,6 +11,7 @@ class Video {
   final String? site;
   final int size;
   final String? type;
+  final bool? official;
 
   Video({
     required this.id,
@@ -21,6 +22,7 @@ class Video {
     this.site,
     int? size,
     this.type,
+    this.official,
   })  : size = size ?? 0,
         name = name ?? '';
 
@@ -33,6 +35,7 @@ class Video {
         site: map["site"],
         size: map["size"],
         type: map["type"],
+        official: map["official"],
       );
 
   static List<Video> listFromJson(List<dynamic> list) =>
@@ -48,6 +51,7 @@ class Video {
       'site': this.site,
       'size': this.size,
       'type': this.type,
+      'official': this.official,
     };
   }
 }
