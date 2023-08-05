@@ -128,7 +128,7 @@ class MovieBase extends _CommonBase {
         releaseDate: Date.tryParse(map["release_date"]),
         originalTitle: map["original_title"],
         title: map["title"],
-        video: map["video"],
+        video: map["video"] is bool ? map["video"] : false,
       );
 
   static List<MovieBase> listFromJson(
